@@ -303,3 +303,78 @@ if showSwing
              "LL",
              bearColor,
              label.style_label_up)
+//====================================================
+// BREAK OF STRUCTURE (BOS)
+//====================================================
+
+// Bullish BOS
+bullishBos =
+    not na(externalHigh.price) and
+    not externalHigh.broken and
+    close > externalHigh.price
+
+// Bearish BOS
+bearishBos =
+    not na(externalLow.price) and
+    not externalLow.broken and
+    close < externalLow.price
+
+//------------------------------
+// Bullish BOS
+//------------------------------
+
+if bullishBos
+
+    markBroken(externalHigh)
+
+    trend := Trend.Bull
+
+    if showBOS
+
+        drawHorizontal(
+             externalHigh.index,
+             externalHigh.price,
+             bullColor)
+
+        drawLabel(
+             bar_index,
+             externalHigh.price,
+             "BOS",
+             bullColor,
+             label.style_label_up)
+
+//------------------------------
+// Bearish BOS
+//------------------------------
+
+if bearishBos
+
+    markBroken(externalLow)
+
+    trend := Trend.Bear
+
+    if showBOS
+
+        drawHorizontal(
+             externalLow.index,
+             externalLow.price,
+             bearColor)
+
+        drawLabel(
+             bar_index,
+             externalLow.price,
+             "BOS",
+             bearColor,
+             label.style_label_down)
+//====================================================
+// TREND STATE
+//====================================================
+
+bgcolor(
+ trend == Trend.Bull ?
+ color.new(bullColor,95) :
+
+ trend == Trend.Bear ?
+ color.new(bearColor,95) :
+
+ na)
