@@ -1,1 +1,91 @@
+//@version=6
+indicator(
+     "SMC Professional v1",
+     shorttitle = "SMC Pro",
+     overlay = true,
+     max_labels_count = 500,
+     max_lines_count = 500,
+     max_boxes_count = 500)
 
+//====================================================
+// INPUTS
+//====================================================
+
+groupStructure = "Market Structure"
+
+swingLength = input.int(
+     5,
+     "Swing Length",
+     minval = 2,
+     maxval = 20,
+     group = groupStructure)
+
+showSwing = input.bool(
+     true,
+     "Show Swing Labels",
+     group = groupStructure)
+
+showBOS = input.bool(
+     true,
+     "Show BOS",
+     group = groupStructure)
+
+showCHOCH = input.bool(
+     true,
+     "Show CHoCH",
+     group = groupStructure)
+
+//====================================================
+// COLORS
+//====================================================
+
+bullColor = color.rgb(0,180,90)
+bearColor = color.rgb(220,60,60)
+
+textColor = color.white
+
+//====================================================
+// ENUMS
+//====================================================
+
+enum Trend
+
+    Bull
+
+    Bear
+
+    Neutral
+
+//====================================================
+// STRUCTURE OBJECT
+//====================================================
+
+type StructurePoint
+
+    float price
+
+    int index
+
+    bool broken
+
+    bool major
+
+    string tag
+
+//====================================================
+// ARRAYS
+//====================================================
+
+var array<StructurePoint> majorHighs = array.new<StructurePoint>()
+
+var array<StructurePoint> majorLows = array.new<StructurePoint>()
+
+var array<StructurePoint> minorHighs = array.new<StructurePoint>()
+
+var array<StructurePoint> minorLows = array.new<StructurePoint>()
+
+//====================================================
+// TREND
+//====================================================
+
+var Trend trend = Trend.Neutral
