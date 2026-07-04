@@ -7,3 +7,9 @@ Added:
 - Swing Detection Engine
 - HH / HL / LH / LL Classification
 - Swing Labels
+Added:
+- Bullish BOS
+- Bearish BOS
+- BOS Lines
+- BOS Labels
+- Trend Detection
