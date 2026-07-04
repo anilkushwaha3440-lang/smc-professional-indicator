@@ -194,3 +194,112 @@ markStrong(
     Swing swing)=>
 
     swing.strong := true
+//====================================================
+// SWING ENGINE
+//====================================================
+
+// Confirmed swing points
+pivotHigh = ta.pivothigh(high, swingLength, swingLength)
+pivotLow  = ta.pivotlow(low, swingLength, swingLength)
+
+// Last confirmed pivots
+var float lastPivotHigh = na
+var float lastPivotLow  = na
+
+if not na(pivotHigh)
+
+    lastPivotHigh := pivotHigh
+
+    updateSwing(
+         externalHigh,
+         pivotHigh,
+         bar_index - swingLength)
+
+    if showSwing
+
+        drawLabel(
+             bar_index - swingLength,
+             pivotHigh,
+             "SH",
+             color.orange,
+             label.style_label_down)
+
+if not na(pivotLow)
+
+    lastPivotLow := pivotLow
+
+    updateSwing(
+         externalLow,
+         pivotLow,
+         bar_index - swingLength)
+
+    if showSwing
+
+        drawLabel(
+             bar_index - swingLength,
+             pivotLow,
+             "SL",
+             color.aqua,
+             label.style_label_up)
+//====================================================
+// STRUCTURE CLASSIFICATION
+//====================================================
+
+var float previousHigh = na
+var float previousLow  = na
+
+bool isHH = false
+bool isLH = false
+bool isHL = false
+bool isLL = false
+
+if not na(pivotHigh)
+
+    isHH := na(previousHigh) or pivotHigh > previousHigh
+    isLH := not isHH
+
+    previousHigh := pivotHigh
+
+if not na(pivotLow)
+
+    isLL := na(previousLow) or pivotLow < previousLow
+    isHL := not isLL
+
+    previousLow := pivotLow
+if showSwing
+
+    if isHH
+
+        drawLabel(
+             bar_index - swingLength,
+             pivotHigh,
+             "HH",
+             bullColor,
+             label.style_label_down)
+
+    if isLH
+
+        drawLabel(
+             bar_index - swingLength,
+             pivotHigh,
+             "LH",
+             bearColor,
+             label.style_label_down)
+
+    if isHL
+
+        drawLabel(
+             bar_index - swingLength,
+             pivotLow,
+             "HL",
+             bullColor,
+             label.style_label_up)
+
+    if isLL
+
+        drawLabel(
+             bar_index - swingLength,
+             pivotLow,
+             "LL",
+             bearColor,
+             label.style_label_up)
