@@ -104,3 +104,93 @@ var Swing internalHigh =
 
 var Swing internalLow =
      Swing.new(na,na,false,false)
+//====================================================
+// UTILITY FUNCTIONS
+//====================================================
+
+// Is bullish candle
+isBullish() =>
+    close > open
+
+// Is bearish candle
+isBearish() =>
+    close < open
+
+// Candle body size
+bodySize() =>
+    math.abs(close - open)
+
+// Full candle range
+candleRange() =>
+    high - low
+
+// Mid price
+midPrice(float h, float l) =>
+    (h + l) * 0.5
+
+// Tick adjusted comparison
+greaterThan(float a, float b) =>
+    a > b + syminfo.mintick
+
+lessThan(float a, float b) =>
+    a < b - syminfo.mintick
+
+equalPrice(float a, float b, float tolerance) =>
+    math.abs(a - b) <= tolerance
+
+//====================================================
+// DRAWING FUNCTIONS
+//====================================================
+
+drawLabel(
+    int x,
+    float y,
+    string txt,
+    color bg,
+    label_style style)=>
+
+    label.new(
+         x = x,
+         y = y,
+         text = txt,
+         color = bg,
+         style = style,
+         textcolor = textColor,
+         size = size.small)
+
+drawHorizontal(
+    int x1,
+    float y,
+    color clr)=>
+
+    line.new(
+         x1 = x1,
+         y1 = y,
+         x2 = bar_index,
+         y2 = y,
+         color = clr,
+         width = 2)
+
+//====================================================
+// SWING STORAGE HELPERS
+//====================================================
+
+updateSwing(
+    Swing swing,
+    float price,
+    int index)=>
+
+    swing.price := price
+    swing.index := index
+    swing.broken := false
+    swing.strong := false
+
+markBroken(
+    Swing swing)=>
+
+    swing.broken := true
+
+markStrong(
+    Swing swing)=>
+
+    swing.strong := true
