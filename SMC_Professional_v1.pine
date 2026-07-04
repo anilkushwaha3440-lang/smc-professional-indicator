@@ -1,1 +1,106 @@
+//@version=6
+indicator(
+     title = "SMC Professional v1",
+     shorttitle = "SMC Pro",
+     overlay = true,
+     max_lines_count = 500,
+     max_labels_count = 500,
+     max_boxes_count = 500)
 
+//====================================================
+// INPUTS
+//====================================================
+
+groupStructure = "Market Structure"
+
+showSwing =
+     input.bool(
+     true,
+     "Show Swing Points",
+     group = groupStructure)
+
+showBOS =
+     input.bool(
+     true,
+     "Show BOS",
+     group = groupStructure)
+
+showCHOCH =
+     input.bool(
+     true,
+     "Show CHoCH",
+     group = groupStructure)
+
+showMSS =
+     input.bool(
+     true,
+     "Show MSS",
+     group = groupStructure)
+
+swingLength =
+     input.int(
+     5,
+     "Swing Length",
+     minval = 2,
+     maxval = 20,
+     group = groupStructure)
+
+//====================================================
+// COLORS
+//====================================================
+
+bullColor =
+     color.rgb(0,180,90)
+
+bearColor =
+     color.rgb(220,50,50)
+
+neutralColor =
+     color.gray
+
+textColor =
+     color.white
+
+//====================================================
+// ENUMS
+//====================================================
+
+enum Trend
+
+    Bull
+
+    Bear
+
+    Neutral
+
+//====================================================
+// TYPES
+//====================================================
+
+type Swing
+
+    float price
+
+    int index
+
+    bool broken
+
+    bool strong
+
+//====================================================
+// GLOBAL VARIABLES
+//====================================================
+
+var Trend trend = Trend.Neutral
+
+var Swing externalHigh =
+     Swing.new(na,na,false,false)
+
+var Swing externalLow =
+     Swing.new(na,na,false,false)
+
+var Swing internalHigh =
+     Swing.new(na,na,false,false)
+
+var Swing internalLow =
+     Swing.new(na,na,false,false)
